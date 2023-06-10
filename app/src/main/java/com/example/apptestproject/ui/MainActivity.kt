@@ -1,3 +1,4 @@
+package com.example.apptestproject.ui
 
 import ApiClient.apiService
 import android.os.Bundle
@@ -24,8 +25,8 @@ class MainActivity : ComponentActivity() {
             try {
                 val response = apiService.getCategories()
                 if (response.isSuccessful) {
-                    val categories = response.body()
-                    categories?.forEach { category ->
+                    val responseData = response.body()
+                    responseData?.forEach { category ->
                         Log.d(TAG, "Category is $category")
                     }
 

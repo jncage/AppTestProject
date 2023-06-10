@@ -1,4 +1,9 @@
+
 import com.example.apptestproject.api.MyApiService
+import com.example.apptestproject.model.Category
+import com.example.apptestproject.utils.CategoriesDeserializer
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,9 +20,13 @@ object ApiClient {
             .addInterceptor(interceptor)
             .build()
 
+        val gson = GsonBuilder()
+            .registerTypeAdapter(object : TypeToken<List<Category>>() {}.type, CategoriesDeserializer())
+            .create()
+
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
 
