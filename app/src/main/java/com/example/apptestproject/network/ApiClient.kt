@@ -1,39 +1,15 @@
 package com.example.apptestproject.network
 
+import android.content.Context
 import com.example.apptestproject.api.MyApiService
 import com.example.apptestproject.utils.CategoriesDeserializer
 import com.google.gson.GsonBuilder
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-//object com.example.apptestproject.network.ApiClient {
-//    private const val BASE_URL = "https://run.mocky.io/"
-//
-//    private val gson = GsonBuilder()
-//        .registerTypeAdapter(object : TypeToken<List<Category>>() {}.type, CategoriesDeserializer())
-//        .create()
-//
-//
-//    private val retrofit: Retrofit by lazy {
-//        val interceptor = HttpLoggingInterceptor()
-//        interceptor.level = HttpLoggingInterceptor.Level.BODY
-//
-//        val client = OkHttpClient.Builder()
-//            .addInterceptor(interceptor)
-//            .build()
-//
-//        Retrofit.Builder()
-//            .baseUrl(BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create(gson))
-//            .client(client)
-//            .build()
-//    }
-//
-//    val apiService: MyApiService by lazy {
-//        retrofit.create(MyApiService::class.java)
-//    }
+import java.io.File
 
 object ApiClient {
     private const val BASE_URL = "https://run.mocky.io/"
@@ -42,24 +18,35 @@ object ApiClient {
         .registerTypeAdapter(List::class.java, CategoriesDeserializer())
         .create()
 
-    private val retrofit: Retrofit by lazy {
+    fun createOkHttpClient(context: Context): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        val client = OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .build()
+        val cacheDirectory = File(context.cacheDir, "http-cache")
+        val cacheSize = (10 * 1024 * 1024).toLong() // 10MB
 
-        Retrofit.Builder()
+        // Create the cache
+        val cache = Cache(cacheDirectory, cacheSize)
+
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .cache(cache)
+            .build()
+    }
+
+    private fun createRetrofit(context: Context): Retrofit {
+        return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(client)
+            .client(createOkHttpClient(context))
             .build()
     }
 
-    val apiService: MyApiService by lazy {
-        retrofit.create(MyApiService::class.java)
+    fun createApiService(context: Context): MyApiService {
+        return createRetrofit(context).create(MyApiService::class.java)
     }
 }
+
+
 
 
