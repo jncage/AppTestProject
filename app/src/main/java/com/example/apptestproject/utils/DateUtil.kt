@@ -5,7 +5,7 @@ import java.util.Calendar
 import java.util.Locale
 
 object DateUtil {
-    private const val DATE_FORMAT = "dd MMMM, yyyy"
+    private const val DATE_FORMAT = "d MMMM, yyyy"
 
     fun getCurrentDate(): String {
         val currentDate = Calendar.getInstance().time

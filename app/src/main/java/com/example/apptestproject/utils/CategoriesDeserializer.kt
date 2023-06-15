@@ -1,6 +1,6 @@
 package com.example.apptestproject.utils
 
-import com.example.apptestproject.model.Category
+import com.example.apptestproject.models.Category
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement

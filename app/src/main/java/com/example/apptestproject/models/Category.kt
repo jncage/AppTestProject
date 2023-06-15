@@ -1,4 +1,4 @@
-package com.example.apptestproject.model
+package com.example.apptestproject.models
 
 data class Category(
     val id: Int,

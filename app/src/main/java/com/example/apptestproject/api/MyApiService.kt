@@ -1,6 +1,6 @@
 package com.example.apptestproject.api
 
-import com.example.apptestproject.model.Category
+import com.example.apptestproject.models.Category
 import retrofit2.http.GET
 
 interface MyApiService {

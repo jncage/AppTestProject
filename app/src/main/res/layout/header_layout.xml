@@ -36,7 +36,6 @@
                 android:layout_height="22dp"
                 android:gravity="top"
                 android:lineSpacingExtra="0sp"
-                android:text="Санкт-Петербург"
                 android:textSize="16sp"
                 android:translationY="-0.06sp" />
 
@@ -49,7 +48,6 @@
                 android:layout_alignParentBottom="true"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="-1sp"
-                android:text="12 Августа, 2023"
                 android:textSize="12sp" />
         </RelativeLayout>
     </LinearLayout>
