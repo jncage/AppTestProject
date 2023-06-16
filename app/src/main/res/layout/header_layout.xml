@@ -36,14 +36,14 @@
                 android:layout_height="22dp"
                 android:gravity="top"
                 android:lineSpacingExtra="0sp"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:translationY="-0.06sp" />
 
             <!-- Current Date -->
             <TextView
                 android:id="@+id/currentDateTextView"
                 android:layout_width="106dp"
-                android:layout_height="16dp"
+                android:layout_height="14sp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
                 android:gravity="center_vertical"

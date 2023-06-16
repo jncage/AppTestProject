@@ -1,5 +1,6 @@
 package com.example.apptestproject.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -7,7 +8,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.apptestproject.R
-import com.example.apptestproject.api.MyApiService
+import com.example.apptestproject.api.CategoriesApiService
+import com.example.apptestproject.models.Category
 import com.example.apptestproject.network.ApiClient
 import com.example.apptestproject.utils.DateUtil
 import com.example.apptestproject.utils.FusedLocationProvider
@@ -15,30 +17,28 @@ import com.example.apptestproject.utils.GeocodeHelper
 import com.example.apptestproject.utils.GeocodeProvider
 import com.example.apptestproject.utils.LocationHelper
 import com.example.apptestproject.utils.LocationProvider
+import com.example.apptestproject.viewmodels.CategoryViewModel
 import com.example.apptestproject.viewmodels.LocationViewModel
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 
 class MainActivity : AppCompatActivity() {
     private val tag = this.javaClass.simpleName
-    private lateinit var apiService: MyApiService
+    private lateinit var apiService: CategoriesApiService
     private lateinit var picasso: Picasso
     private lateinit var okHttpClient: OkHttpClient
     private lateinit var cityNameTextView: TextView
     private lateinit var locationViewModel: LocationViewModel
     private lateinit var locationHelper: LocationHelper
+    private lateinit var categoryViewModel: CategoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.d(tag, "Activity created")
-
-        // Initialize the API service and OkHttpClient
-        apiService = ApiClient.createApiService(this)
+        apiService = ApiClient.createCategoriesApiService(this)
+        categoryViewModel = CategoryViewModel(apiService)
         okHttpClient = ApiClient.createOkHttpClient(this)
         picasso = Picasso.Builder(this)
             .downloader(OkHttp3Downloader(okHttpClient))
@@ -53,43 +53,31 @@ class MainActivity : AppCompatActivity() {
         locationViewModel.cityNameLiveData.observe(this) { cityName ->
             updateCityName(cityName)
         }
-        locationHelper.checkLocationPermission()
-
-
-        // Create a coroutine scope
-        val mainScope = CoroutineScope(Dispatchers.Main)
-
-        // Launch a coroutine
-        mainScope.launch {
-            try {
-                val categories = apiService.getCategories()
-                categories.forEachIndexed { index, category ->
-                    Log.d(tag, "Category is $category")
-
-                    // Find the corresponding category button by ID
-                    val buttonId =
-                        resources.getIdentifier("category${index + 1}", "id", packageName)
-                    val categoryButton = findViewById<RelativeLayout>(buttonId)
-
-                    // Find the views within the category button
-                    val backgroundImage =
-                        categoryButton.findViewById<ImageView>(R.id.backgroundImage)
-                    val buttonName = categoryButton.findViewById<TextView>(R.id.buttonName)
-
-                    // Set the category name on the button
-                    buttonName.text = category.name
-
-                    // Load the image using Picasso into the ImageView
-                    picasso
-                        .load(category.imageUrl)
-                        .into(backgroundImage)
-                }
-            } catch (e: Exception) {
-                // Handle network error
-                Log.e(tag, "Network error: ${e.message}")
-            }
+        categoryViewModel.categoriesLiveData.observe(this) { categories ->
+            updateCategories(categories)
         }
+        locationHelper.checkLocationPermission()
+        categoryViewModel.fetchCategories()
+    }
 
+    private fun updateCategories(categories: List<Category>) {
+        categories.forEachIndexed { index, category ->
+            Log.d(tag, "Category is $category")
+            val buttonId =
+                resources.getIdentifier("category${index + 1}", "id", packageName)
+            val categoryButton = findViewById<RelativeLayout>(buttonId)
+            categoryButton.setOnClickListener {
+                val intent = Intent(this@MainActivity, DishListActivity::class.java).apply {
+                    putExtra("categoryName", category.name)
+                }
+                startActivity(intent)
+            }
+            val backgroundImage =
+                categoryButton.findViewById<ImageView>(R.id.backgroundImage)
+            val buttonName = categoryButton.findViewById<TextView>(R.id.buttonName)
+            buttonName.text = category.name
+            picasso.load(category.imageUrl).into(backgroundImage)
+        }
     }
 
     private fun updateCityName(cityName: String) {

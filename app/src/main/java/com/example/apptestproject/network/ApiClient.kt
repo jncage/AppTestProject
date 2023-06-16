@@ -1,7 +1,8 @@
 package com.example.apptestproject.network
 
 import android.content.Context
-import com.example.apptestproject.api.MyApiService
+import com.example.apptestproject.api.CategoriesApiService
+import com.example.apptestproject.api.DishesApiService
 import com.example.apptestproject.utils.CategoriesDeserializer
 import com.google.gson.GsonBuilder
 import okhttp3.Cache
@@ -14,9 +15,10 @@ import java.io.File
 object ApiClient {
     private const val BASE_URL = "https://run.mocky.io/"
 
-    private val gson = GsonBuilder()
+    private val categoriesGson = GsonBuilder()
         .registerTypeAdapter(List::class.java, CategoriesDeserializer())
         .create()
+
 
     fun createOkHttpClient(context: Context): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
@@ -34,16 +36,25 @@ object ApiClient {
             .build()
     }
 
-    private fun createRetrofit(context: Context): Retrofit {
+    private fun createCategoriesRetrofit(context: Context): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(categoriesGson))
             .client(createOkHttpClient(context))
             .build()
     }
-
-    fun createApiService(context: Context): MyApiService {
-        return createRetrofit(context).create(MyApiService::class.java)
+    private fun createDishesRetrofit(context: Context): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(createOkHttpClient(context))
+            .build()
+    }
+    fun createDishesApiService(context: Context): DishesApiService {
+        return createDishesRetrofit(context).create(DishesApiService::class.java)
+    }
+    fun createCategoriesApiService(context: Context): CategoriesApiService {
+        return createCategoriesRetrofit(context).create(CategoriesApiService::class.java)
     }
 }
 
