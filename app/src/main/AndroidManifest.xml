@@ -31,6 +31,9 @@
             android:parentActivityName=".ui.MainActivity">
 
         </activity>
+        <activity
+            android:name=".ui.CartActivity">
+        </activity>
     </application>
 
 </manifest>

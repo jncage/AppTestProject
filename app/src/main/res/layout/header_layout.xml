@@ -32,11 +32,13 @@
             <!-- City Name -->
             <TextView
                 android:id="@+id/cityTextView"
+                android:fontFamily="@font/sf_pro_display_medium"
                 android:layout_width="145dp"
                 android:layout_height="22dp"
                 android:gravity="top"
                 android:lineSpacingExtra="0sp"
                 android:textSize="18sp"
+                android:textColor="@color/black"
                 android:translationY="-0.06sp" />
 
             <!-- Current Date -->
@@ -46,6 +48,7 @@
                 android:layout_height="14sp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
+                android:textColor="@color/black"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="-1sp"
                 android:textSize="12sp" />

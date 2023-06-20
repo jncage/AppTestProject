@@ -7,9 +7,9 @@ data class Dish(
     val name: String,
     val price: Int,
     val weight: Int,
-    val description: String,
+    var description: String,
     @SerializedName("image_url")
-    val imageUrl: String,
+    var imageUrl: String,
     @SerializedName("tegs")
     val tags: List<String>
 )

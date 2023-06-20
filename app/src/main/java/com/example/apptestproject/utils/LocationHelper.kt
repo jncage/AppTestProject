@@ -38,7 +38,6 @@ class LocationHelper(
                     startLocationUpdates()
                 } else {
                     Log.d(tag, "Location permission denied")
-                    // Handle permission denial if needed
                 }
             }
 
@@ -59,7 +58,6 @@ class LocationHelper(
                 val cityName = geocodeProvider.getCityName(locationData)
                 _locationLiveData.postValue(cityName)
             } catch (exception: Exception) {
-                // Handle exception
                 Log.d(tag, "Failed to receive current location")
             }
         }

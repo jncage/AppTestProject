@@ -1,24 +1,24 @@
-<!-- custom_button_layout.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/buttonContainer"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <!-- Background picture -->
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/backgroundImage"
-        android:background="@drawable/button_background"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cornered_shape_10dp" />
 
-    <!-- Button name -->
     <TextView
         android:id="@+id/buttonName"
-        android:layout_width="wrap_content"
+        android:fontFamily="@font/sf_pro_display_medium"
+        android:layout_width="191dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:padding="8dp"
-        android:text="@string/button_name_placeholder" />
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
 </RelativeLayout>

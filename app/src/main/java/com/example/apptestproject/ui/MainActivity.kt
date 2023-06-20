@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -56,8 +57,13 @@ class MainActivity : AppCompatActivity() {
         categoryViewModel.categoriesLiveData.observe(this) { categories ->
             updateCategories(categories)
         }
-        locationHelper.checkLocationPermission()
         categoryViewModel.fetchCategories()
+        locationHelper.checkLocationPermission()
+        val cartSection = findViewById<LinearLayout>(R.id.cartSection)
+        cartSection.setOnClickListener {
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun updateCategories(categories: List<Category>) {
@@ -74,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             }
             val backgroundImage =
                 categoryButton.findViewById<ImageView>(R.id.backgroundImage)
+            backgroundImage.clipToOutline = true
             val buttonName = categoryButton.findViewById<TextView>(R.id.buttonName)
             buttonName.text = category.name
             picasso.load(category.imageUrl).into(backgroundImage)

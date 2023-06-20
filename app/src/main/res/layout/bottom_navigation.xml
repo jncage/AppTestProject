@@ -8,14 +8,12 @@
 
     <!-- Home Section -->
     <LinearLayout
+        android:id="@+id/homeSection"
         android:layout_width="48dp"
         android:layout_height="49dp"
         android:layout_marginLeft="31dp"
         android:layout_marginTop="5dp"
-
-        android:clickable="true"
         android:gravity="center"
-        android:onClick="onHomeClicked"
         android:orientation="vertical"
         android:focusable="true">
 
@@ -43,9 +41,7 @@
         android:layout_width="48dp"
         android:layout_height="49dp"
         android:layout_marginTop="5dp"
-        android:clickable="true"
         android:gravity="center"
-        android:onClick="onSearchClicked"
         android:orientation="vertical">
 
         <ImageView
@@ -69,13 +65,11 @@
 
     <!-- Cart Section -->
     <LinearLayout
+        android:id="@+id/cartSection"
         android:layout_width="48dp"
         android:layout_height="49dp"
         android:layout_marginTop="5dp"
-
-        android:clickable="true"
         android:gravity="center"
-        android:onClick="onCartClicked"
         android:orientation="vertical">
 
         <ImageView
@@ -102,11 +96,9 @@
         android:layout_width="48dp"
         android:layout_height="49dp"
         android:layout_marginTop="5dp"
-        android:clickable="true"
         android:gravity="center"
-        android:onClick="onAccountClicked"
         android:orientation="vertical"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp"
         >
 
         <ImageView
