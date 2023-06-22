@@ -27,10 +27,10 @@ class CartAdapter(
         val cartItem = cartItems[position]
         holder.bind(cartItem)
     }
-    fun updateCartItems(items: List<CartItem>) {
-        this.cartItems = items
-        notifyDataSetChanged()
-    }
+//    fun updateCartItems(items: List<CartItem>) {
+//        this.cartItems = items
+//        notifyDataSetChanged()
+//    }
     inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val dishImage = itemView.findViewById<ImageView>(R.id.dishImageCart)
         private val dishName = itemView.findViewById<TextView>(R.id.dishNameCart)

@@ -17,11 +17,13 @@ class CartActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cart)
         val cartRecyclerView = findViewById<RecyclerView>(R.id.cartRecyclerView)
         val totalPrice = findViewById<TextView>(R.id.pay)
-        val cartAdapter = CartAdapter(emptyList(), onPlusClick = { cartViewModel.addToCart(it) },
-            onMinusClick = { cartViewModel.removeFromCart(it) })
-        cartRecyclerView.adapter = cartAdapter
+//        val cartAdapter = CartAdapter(emptyList(), onPlusClick = { cartViewModel.addToCart(it) },
+//            onMinusClick = { cartViewModel.removeFromCart(it) })
+//        cartRecyclerView.adapter = cartAdapter
         cartViewModel.cartData.observe(this) {
-            cartAdapter.updateCartItems(it.cartItems)
+//            cartAdapter.updateCartItems(it.cartItems)
+            cartRecyclerView.adapter = CartAdapter(it.cartItems, onPlusClick = { cartViewModel.addToCart(it) },
+                onMinusClick = { cartViewModel.removeFromCart(it) })
             totalPrice.text = getString(R.string.pay, it.totalPrice)
         }
         cartViewModel.updateCartData()
