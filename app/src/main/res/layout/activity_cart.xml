@@ -29,12 +29,11 @@
             app:tint="@color/black" />
 
         <TextView
-            android:id="@+id/userCityName"
+            android:id="@+id/cityNameCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/sf_pro_display_medium"
-            android:text="TextView"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
@@ -43,17 +42,16 @@
             app:lineHeight="22sp" />
 
         <TextView
-            android:id="@+id/currentDate"
+            android:id="@+id/currentDateCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0.5"
             android:fontFamily="@font/sf_pro_display_regular"
-            android:text="TextView"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/userCityName"
-            app:layout_constraintTop_toBottomOf="@+id/userCityName"
+            app:layout_constraintStart_toStartOf="@+id/cityNameCart"
+            app:layout_constraintTop_toBottomOf="@+id/cityNameCart"
             app:lineHeight="16sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView

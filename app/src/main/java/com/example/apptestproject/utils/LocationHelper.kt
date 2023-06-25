@@ -1,6 +1,8 @@
 package com.example.apptestproject.utils
 
 import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,9 +14,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class LocationHelper @Inject constructor(
-    private val activity: FragmentActivity,
+    private val activity: Context,
     private val locationProvider: LocationProvider,
     private val geocodeProvider: GeocodeProvider
 ) {
@@ -34,7 +38,7 @@ class LocationHelper @Inject constructor(
 
     private fun requestLocationPermission() {
         val requestPermissionLauncher =
-            activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            (activity as FragmentActivity).registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
                 if (isGranted) {
                     startLocationUpdates()
                 } else {
@@ -57,6 +61,7 @@ class LocationHelper @Inject constructor(
             try {
                 val locationData = locationProvider.getCurrentLocation()
                 val cityName = geocodeProvider.getCityName(locationData)
+                Log.d("LocationHelper", "City name from locationHelper is $cityName")
                 _locationLiveData.postValue(cityName)
             } catch (exception: Exception) {
                 Log.d(tag, "Failed to receive current location")

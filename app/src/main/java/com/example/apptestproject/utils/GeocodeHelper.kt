@@ -18,6 +18,7 @@ class GeocodeHelper @Inject constructor(private val context: Context) : GeocodeP
                 geocoder.getFromLocation(locationData.latitude, locationData.longitude, 1)
             if (!addresses.isNullOrEmpty()) {
                 cityName = addresses[0].locality
+                Log.d("LocationHelper", "City name is $cityName")
             } else {
                 Log.d(tag, "No matching addresses found")
             }

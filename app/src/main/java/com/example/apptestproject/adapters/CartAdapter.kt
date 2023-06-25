@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apptestproject.R
 import com.example.apptestproject.models.CartItem
 import com.squareup.picasso.Picasso
+import javax.inject.Inject
 
 class CartAdapter(
     private var cartItems: List<CartItem>,
     private val onPlusClick: (CartItem) -> Unit,
     private val onMinusClick: (CartItem) -> Unit
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+    @Inject
+    lateinit var picasso: Picasso
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)
@@ -41,7 +44,7 @@ class CartAdapter(
         private val minusButton = itemView.findViewById<ImageView>(R.id.minusButton)
         private val plusButton = itemView.findViewById<ImageView>(R.id.plusButton)
         fun bind(cartItem: CartItem) {
-            Picasso.get().load(cartItem.dish.imageUrl).into(dishImage)
+            picasso.load(cartItem.dish.imageUrl).into(dishImage)
             dishName.text = cartItem.dish.name
             dishPrice.text = context.getString(R.string.price, cartItem.dish.price)
             dishWeight.text = context.getString(R.string.weight, cartItem.dish.weight)

@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apptestproject.R
 import com.example.apptestproject.models.Dish
 import com.squareup.picasso.Picasso
+import javax.inject.Inject
 
 class DishAdapter(
     private var dishes: List<Dish> = emptyList(),
     private val onDishClick: (Dish) -> Unit
 ) :
     RecyclerView.Adapter<DishAdapter.DishViewHolder>() {
+    @Inject
+    lateinit var picasso: Picasso
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -45,7 +48,7 @@ class DishAdapter(
         private val dishName = itemView.findViewById<TextView>(R.id.dishName)
         fun bind(item: Dish) {
             dishName.text = item.name
-            Picasso.get().load(item.imageUrl).into(dishImageView)
+            picasso.load(item.imageUrl).into(dishImageView)
             itemView.setOnClickListener {
                 onDishClick(item)
             }

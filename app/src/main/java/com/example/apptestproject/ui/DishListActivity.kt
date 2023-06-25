@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.apptestproject.MyApp
 import com.example.apptestproject.R
 import com.example.apptestproject.adapters.DishAdapter
 import com.example.apptestproject.adapters.TagAdapter
@@ -18,24 +19,27 @@ import com.example.apptestproject.models.Dish
 import com.example.apptestproject.network.ApiClient
 import com.example.apptestproject.viewmodels.DishesViewModel
 import com.squareup.picasso.Picasso
+import javax.inject.Inject
 
 class DishListActivity : AppCompatActivity() {
     private val tag = this.javaClass.simpleName
-    private lateinit var dishesApiService: DishesApiService
-    private lateinit var dishesViewModel: DishesViewModel
+    @Inject
+    lateinit var dishesViewModel: DishesViewModel
+    @Inject
+    lateinit var picasso: Picasso
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dish_list)
         Log.d(tag, "DishListActivity created")
-        dishesApiService = ApiClient.createDishesApiService(this)
-        dishesViewModel = DishesViewModel(dishesApiService)
-
+        val appComponent = (application as MyApp).appComponent
+        appComponent.inject(this)
         val tagRecyclerView = findViewById<RecyclerView>(R.id.tagsList)
         val dishRecyclerView = findViewById<RecyclerView>(R.id.dishesList)
         val dishAdapter = DishAdapter { dish ->
             showAddToCartPopup(dish)
         }
+        appComponent.inject(dishAdapter)
         val tagAdapter = TagAdapter { tag ->
             val filteredDishes = dishesViewModel.filterDishesByTag(tag)
             dishAdapter.updateDishes(filteredDishes)
@@ -78,7 +82,7 @@ class DishListActivity : AppCompatActivity() {
         dishWeight.text = getString(R.string.weight, dish.weight)
         val dishDescription = popupView.findViewById<TextView>(R.id.descriptionView)
         dishDescription.text = dish.description
-        Picasso.get().load(dish.imageUrl).into(dishImage)
+        picasso.load(dish.imageUrl).into(dishImage)
         dishName.text = dish.name
         builder.setView(popupView)
         builder.setCancelable(false)

@@ -9,8 +9,9 @@ import com.example.apptestproject.models.CartItem
 import com.example.apptestproject.models.Dish
 import com.example.apptestproject.repositories.CartRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DishesViewModel(private val dishesApiService: DishesApiService) : ViewModel() {
+class DishesViewModel @Inject constructor(private val dishesApiService: DishesApiService) : ViewModel() {
     private val _tagsLiveData = MutableLiveData<List<String>>()
     private lateinit var dishes: List<Dish>
     val tagsLiveData: LiveData<List<String>>

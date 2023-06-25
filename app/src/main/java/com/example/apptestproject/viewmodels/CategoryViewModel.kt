@@ -8,8 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.apptestproject.api.CategoriesApiService
 import com.example.apptestproject.models.Category
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CategoryViewModel(private val categoriesApiService: CategoriesApiService) :
+class CategoryViewModel @Inject constructor(private val categoriesApiService: CategoriesApiService) :
     ViewModel() {
     private val _categoriesLiveData = MutableLiveData<List<Category>>()
     val categoriesLiveData: LiveData<List<Category>>

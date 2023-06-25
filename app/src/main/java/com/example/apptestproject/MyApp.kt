@@ -2,18 +2,16 @@ package com.example.apptestproject
 
 import android.app.Application
 import androidx.fragment.app.FragmentActivity
-import com.example.apptestproject.di.DaggerLocationComponent
-import com.example.apptestproject.di.LocationComponent
+import com.example.apptestproject.di.AppComponent
+import com.example.apptestproject.di.DaggerAppComponent
 import com.example.apptestproject.di.LocationModule
 
 class MyApp : Application() {
-    lateinit var locationComponent: LocationComponent
+    lateinit var appComponent: AppComponent
         private set
 
-    fun initializeLocationComponent(fragmentActivity: FragmentActivity) {
-        locationComponent = DaggerLocationComponent.builder()
-            .locationModule(LocationModule(fragmentActivity))
-            .build()
+    override fun onCreate() {
+        super.onCreate()
+        appComponent = DaggerAppComponent.factory().create(applicationContext)
     }
 }
-
