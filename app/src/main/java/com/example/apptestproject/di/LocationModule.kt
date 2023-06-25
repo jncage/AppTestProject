@@ -13,26 +13,15 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class LocationModule {
-//    @Provides
-//    fun provideApplication(application: Application): Application {
-//        return application
-//    }
-
+class LocationModule(private val activity: FragmentActivity) {
     @Provides
-    fun provideContext(application: Application): Context {
-        return application.applicationContext
+    fun provideFragmentActivity(): FragmentActivity{
+        return activity
     }
-
     @Provides
-    fun provideLocationHelper(
-        fragmentActivity: FragmentActivity,
-        locationProvider: FusedLocationProvider,
-        geocodeProvider: GeocodeHelper
-    ): LocationHelper {
-        return LocationHelper(fragmentActivity, locationProvider, geocodeProvider)
+    fun provideFragmentContext(): Context {
+        return activity
     }
-
     @Provides
     fun provideLocationProvider(context: Context): LocationProvider {
         return FusedLocationProvider(context)

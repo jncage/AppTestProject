@@ -12,14 +12,5 @@ import javax.inject.Singleton
 @Component(modules = [LocationModule::class])
 interface LocationComponent {
     fun inject(activity: MainActivity)
-    @Component.Builder
-    interface Builder {
-        fun build(): LocationComponent
 
-        @BindsInstance
-        fun application(application: Application): Builder
-
-        @BindsInstance
-        fun fragmentActivity(fragmentActivity: FragmentActivity): Builder
-    }
 }

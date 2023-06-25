@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val myApp = application as MyApp
-        myApp.setFragmentActivity(this)
+        myApp.initializeLocationComponent(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.d(tag, "Activity created")
