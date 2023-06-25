@@ -1,0 +1,8 @@
+<resources>
+    <array name="category_buttons">
+        <item>@+id/category1</item>
+        <item>@+id/category2</item>
+        <item>@+id/category3</item>
+        <item>@+id/category4</item>
+    </array>
+</resources>

@@ -23,10 +23,6 @@ class DishListActivity : AppCompatActivity() {
     private val tag = this.javaClass.simpleName
     private lateinit var dishesApiService: DishesApiService
     private lateinit var dishesViewModel: DishesViewModel
-    private lateinit var tagAdapter: TagAdapter
-    private lateinit var dishAdapter: DishAdapter
-    private lateinit var dishRecyclerView: RecyclerView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,28 +32,25 @@ class DishListActivity : AppCompatActivity() {
         dishesViewModel = DishesViewModel(dishesApiService)
 
         val tagRecyclerView = findViewById<RecyclerView>(R.id.tagsList)
-        dishRecyclerView = findViewById(R.id.dishesList)
-        tagAdapter = TagAdapter { tag ->
+        val dishRecyclerView = findViewById<RecyclerView>(R.id.dishesList)
+        val dishAdapter = DishAdapter { dish ->
+            showAddToCartPopup(dish)
+        }
+        val tagAdapter = TagAdapter { tag ->
             val filteredDishes = dishesViewModel.filterDishesByTag(tag)
-            setDishesAdapter(filteredDishes)
+            dishAdapter.updateDishes(filteredDishes)
         }
         tagAdapter.setSelectedItemPosition(0)
         tagRecyclerView.adapter = tagAdapter
-        dishAdapter = DishAdapter {dish ->
-            showAddToCartPopup(dish)
-        }
         dishRecyclerView.adapter = dishAdapter
-
-
         dishesViewModel.tagsLiveData.observe(this) {
             Log.d(tag, "Tags are $it")
             tagAdapter.updateTags(it)
         }
         dishesViewModel.dishesLiveData.observe(this) {
             Log.d(tag, "Dishes are $it")
-            setDishesAdapter(it)
+            dishAdapter.updateDishes(it)
         }
-
         dishesViewModel.fetchDishes()
         val categoryName = intent.getStringExtra("categoryName")
         val categoryNameTextView = findViewById<TextView>(R.id.categoryName)
@@ -80,9 +73,9 @@ class DishListActivity : AppCompatActivity() {
         val dishName = popupView.findViewById<TextView>(R.id.dishNameView)
         val dishImage = popupView.findViewById<ImageView>(R.id.dishImagePopUp)
         val dishPrice = popupView.findViewById<TextView>(R.id.priceView)
-        dishPrice.text = "${dish.price} ₽"
+        dishPrice.text = getString(R.string.price, dish.price)
         val dishWeight = popupView.findViewById<TextView>(R.id.weightView)
-        dishWeight.text = " · ${dish.weight}г"
+        dishWeight.text = getString(R.string.weight, dish.weight)
         val dishDescription = popupView.findViewById<TextView>(R.id.descriptionView)
         dishDescription.text = dish.description
         Picasso.get().load(dish.imageUrl).into(dishImage)
@@ -93,24 +86,15 @@ class DishListActivity : AppCompatActivity() {
         alertDialog.window?.setBackgroundDrawableResource(R.drawable.cornered_shape_15dp)
         alertDialog.show()
 
-        // Set up the "Add to Cart" button
         val addToCartButton = popupView.findViewById<TextView>(R.id.addToCartButton)
         addToCartButton.setOnClickListener {
-            // Perform the action of adding the dish to the cart
             dishesViewModel.addToCart(dish)
-            alertDialog.dismiss() // Close the pop-up window
+            alertDialog.dismiss()
         }
 
-        // Set up the dismiss button
         val dismissButton = popupView.findViewById<ImageView>(R.id.closeButton)
         dismissButton.setOnClickListener {
-            alertDialog.dismiss() // Close the pop-up window
+            alertDialog.dismiss()
         }
-
-
-    }
-
-    private fun setDishesAdapter(dishes: List<Dish>) {
-        dishAdapter.updateDishes(dishes)
     }
 }

@@ -2,5 +2,7 @@
     <string name="app_name">AppTestProject</string>
     <string name="button_name_placeholder">Button Name Placeholder</string>
     <string name="add_to_cart">Добавить в корзину</string>
-    <string name="pay">Оплатить %1$d ₽</string>
+    <string name="pay">Оплатить %s</string>
+    <string name="price">"%d ₽"</string>
+    <string name="weight">" · %dг"</string>
 </resources>

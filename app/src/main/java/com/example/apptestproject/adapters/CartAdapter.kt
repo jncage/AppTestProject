@@ -1,5 +1,6 @@
 package com.example.apptestproject.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ class CartAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)
-        return CartViewHolder(itemView)
+        return CartViewHolder(itemView, parent.context)
     }
 
     override fun getItemCount() = cartItems.size
@@ -27,11 +28,11 @@ class CartAdapter(
         val cartItem = cartItems[position]
         holder.bind(cartItem)
     }
-//    fun updateCartItems(items: List<CartItem>) {
-//        this.cartItems = items
-//        notifyDataSetChanged()
-//    }
-    inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun updateCartItems(items: List<CartItem>) {
+        this.cartItems = items
+        notifyDataSetChanged()
+    }
+    inner class CartViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
         private val dishImage = itemView.findViewById<ImageView>(R.id.dishImageCart)
         private val dishName = itemView.findViewById<TextView>(R.id.dishNameCart)
         private val dishPrice = itemView.findViewById<TextView>(R.id.priceView)
@@ -42,8 +43,8 @@ class CartAdapter(
         fun bind(cartItem: CartItem) {
             Picasso.get().load(cartItem.dish.imageUrl).into(dishImage)
             dishName.text = cartItem.dish.name
-            dishPrice.text = "${cartItem.dish.price} ₽"
-            dishWeight.text = " · ${cartItem.dish.weight}г"
+            dishPrice.text = context.getString(R.string.price, cartItem.dish.price)
+            dishWeight.text = context.getString(R.string.weight, cartItem.dish.weight)
             dishAmount.text = "${cartItem.quantity}"
             plusButton.setOnClickListener {
                 onPlusClick(cartItem)

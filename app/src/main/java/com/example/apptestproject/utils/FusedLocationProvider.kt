@@ -5,10 +5,11 @@ import android.content.Context
 import com.example.apptestproject.models.LocationData
 import com.google.android.gms.location.*
 import kotlinx.coroutines.suspendCancellableCoroutine
+import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class FusedLocationProvider(context: Context) : LocationProvider {
+class FusedLocationProvider @Inject constructor(private val context: Context) : LocationProvider {
     private val fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(context)
     private val locationRequest: LocationRequest = LocationRequest.Builder(10000)

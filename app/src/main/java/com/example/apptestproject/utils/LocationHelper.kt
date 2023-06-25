@@ -11,8 +11,9 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LocationHelper(
+class LocationHelper @Inject constructor(
     private val activity: FragmentActivity,
     private val locationProvider: LocationProvider,
     private val geocodeProvider: GeocodeProvider

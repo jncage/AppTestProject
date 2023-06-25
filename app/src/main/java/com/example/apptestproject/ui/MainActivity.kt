@@ -8,16 +8,13 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.apptestproject.MyApp
 import com.example.apptestproject.R
 import com.example.apptestproject.api.CategoriesApiService
 import com.example.apptestproject.models.Category
 import com.example.apptestproject.network.ApiClient
 import com.example.apptestproject.utils.DateUtil
-import com.example.apptestproject.utils.FusedLocationProvider
-import com.example.apptestproject.utils.GeocodeHelper
-import com.example.apptestproject.utils.GeocodeProvider
 import com.example.apptestproject.utils.LocationHelper
-import com.example.apptestproject.utils.LocationProvider
 import com.example.apptestproject.viewmodels.CategoryViewModel
 import com.example.apptestproject.viewmodels.LocationViewModel
 import com.squareup.picasso.OkHttp3Downloader
@@ -30,15 +27,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var apiService: CategoriesApiService
     private lateinit var picasso: Picasso
     private lateinit var okHttpClient: OkHttpClient
-    private lateinit var cityNameTextView: TextView
     private lateinit var locationViewModel: LocationViewModel
-    private lateinit var locationHelper: LocationHelper
+    @Inject
+    lateinit var locationHelper: LocationHelper
     private lateinit var categoryViewModel: CategoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val myApp = application as MyApp
+        myApp.setFragmentActivity(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.d(tag, "Activity created")
+
+        myApp.locationComponent.inject(this)
         apiService = ApiClient.createCategoriesApiService(this)
         categoryViewModel = CategoryViewModel(apiService)
         okHttpClient = ApiClient.createOkHttpClient(this)
@@ -46,19 +47,17 @@ class MainActivity : AppCompatActivity() {
             .downloader(OkHttp3Downloader(okHttpClient))
             .build()
         val currentDate = findViewById<TextView>(R.id.currentDateTextView)
-        cityNameTextView = findViewById(R.id.cityTextView)
+        val cityNameTextView = findViewById<TextView>(R.id.cityTextView)
         currentDate.text = DateUtil.getCurrentDate()
-        val locationProvider: LocationProvider = FusedLocationProvider(this)
-        val geocodeProvider: GeocodeProvider = GeocodeHelper(this)
-        locationHelper = LocationHelper(this, locationProvider, geocodeProvider)
         locationViewModel = LocationViewModel(locationHelper)
         locationViewModel.cityNameLiveData.observe(this) { cityName ->
-            updateCityName(cityName)
+            cityNameTextView.text = cityName
         }
         categoryViewModel.categoriesLiveData.observe(this) { categories ->
             updateCategories(categories)
         }
         categoryViewModel.fetchCategories()
+
         locationHelper.checkLocationPermission()
         val cartSection = findViewById<LinearLayout>(R.id.cartSection)
         cartSection.setOnClickListener {
@@ -70,11 +69,13 @@ class MainActivity : AppCompatActivity() {
     private fun updateCategories(categories: List<Category>) {
         categories.forEachIndexed { index, category ->
             Log.d(tag, "Category is $category")
-            val buttonId =
-                resources.getIdentifier("category${index + 1}", "id", packageName)
+            val categoryButtons = resources.obtainTypedArray(R.array.category_buttons)
+            val buttonId = categoryButtons.getResourceId(index, 0)
+            categoryButtons.recycle()
+//                resources.getIdentifier("category${index + 1}", "id", packageName)
             val categoryButton = findViewById<RelativeLayout>(buttonId)
             categoryButton.setOnClickListener {
-                val intent = Intent(this@MainActivity, DishListActivity::class.java).apply {
+                val intent = Intent(this, DishListActivity::class.java).apply {
                     putExtra("categoryName", category.name)
                 }
                 startActivity(intent)
@@ -86,9 +87,5 @@ class MainActivity : AppCompatActivity() {
             buttonName.text = category.name
             picasso.load(category.imageUrl).into(backgroundImage)
         }
-    }
-
-    private fun updateCityName(cityName: String) {
-        cityNameTextView.text = cityName
     }
 }
