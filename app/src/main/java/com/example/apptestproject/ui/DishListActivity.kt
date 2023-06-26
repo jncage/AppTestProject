@@ -3,43 +3,37 @@ package com.example.apptestproject.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apptestproject.MyApp
 import com.example.apptestproject.R
 import com.example.apptestproject.adapters.DishAdapter
 import com.example.apptestproject.adapters.TagAdapter
-import com.example.apptestproject.api.DishesApiService
 import com.example.apptestproject.models.Dish
-import com.example.apptestproject.network.ApiClient
 import com.example.apptestproject.viewmodels.DishesViewModel
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
 class DishListActivity : AppCompatActivity() {
-    private val tag = this.javaClass.simpleName
     @Inject
     lateinit var dishesViewModel: DishesViewModel
+
     @Inject
     lateinit var picasso: Picasso
-
+    private val tag = this.javaClass.simpleName
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dish_list)
         Log.d(tag, "DishListActivity created")
-        val appComponent = (application as MyApp).appComponent
-        appComponent.inject(this)
+        (application as MyApp).appComponent.inject(this)
         val tagRecyclerView = findViewById<RecyclerView>(R.id.tagsList)
         val dishRecyclerView = findViewById<RecyclerView>(R.id.dishesList)
-        val dishAdapter = DishAdapter { dish ->
+        val dishAdapter = DishAdapter(picasso) { dish ->
             showAddToCartPopup(dish)
         }
-        appComponent.inject(dishAdapter)
         val tagAdapter = TagAdapter { tag ->
             val filteredDishes = dishesViewModel.filterDishesByTag(tag)
             dishAdapter.updateDishes(filteredDishes)
@@ -71,34 +65,9 @@ class DishListActivity : AppCompatActivity() {
     }
 
     private fun showAddToCartPopup(dish: Dish) {
-        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_add_to_cart, null)
-        val builder = AlertDialog.Builder(this)
-
-        val dishName = popupView.findViewById<TextView>(R.id.dishNameView)
-        val dishImage = popupView.findViewById<ImageView>(R.id.dishImagePopUp)
-        val dishPrice = popupView.findViewById<TextView>(R.id.priceView)
-        dishPrice.text = getString(R.string.price, dish.price)
-        val dishWeight = popupView.findViewById<TextView>(R.id.weightView)
-        dishWeight.text = getString(R.string.weight, dish.weight)
-        val dishDescription = popupView.findViewById<TextView>(R.id.descriptionView)
-        dishDescription.text = dish.description
-        picasso.load(dish.imageUrl).into(dishImage)
-        dishName.text = dish.name
-        builder.setView(popupView)
-        builder.setCancelable(false)
-        val alertDialog = builder.create()
-        alertDialog.window?.setBackgroundDrawableResource(R.drawable.cornered_shape_15dp)
-        alertDialog.show()
-
-        val addToCartButton = popupView.findViewById<TextView>(R.id.addToCartButton)
-        addToCartButton.setOnClickListener {
+        val addToCartDialog = AddToCartDialog(picasso, this, dish) {
             dishesViewModel.addToCart(dish)
-            alertDialog.dismiss()
         }
-
-        val dismissButton = popupView.findViewById<ImageView>(R.id.closeButton)
-        dismissButton.setOnClickListener {
-            alertDialog.dismiss()
-        }
+        addToCartDialog.show()
     }
 }

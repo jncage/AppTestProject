@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/headerLayout"
     android:layout_width="match_parent"
     android:layout_height="69dp"
@@ -6,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="173dp"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
         android:layout_marginStart="16dp"
@@ -16,42 +17,40 @@
             android:id="@+id/locationIconImageView"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:paddingLeft="4.5dp"
-            android:paddingRight="4.5dp"
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp"
+            android:paddingTop="2dp"
             android:background="#00000000"
             android:src="@drawable/location_icon" />
 
         <RelativeLayout
             android:id="@+id/group_604"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:background="#00000000">
             <!-- City Name -->
             <TextView
                 android:id="@+id/cityTextView"
                 android:fontFamily="@font/sf_pro_display_medium"
-                android:layout_width="145dp"
-                android:layout_height="22dp"
-                android:gravity="top"
-                android:lineSpacingExtra="0sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="@color/black"
-                android:translationY="-0.06sp" />
+                app:lineHeight="22dp"
+                android:text="Москва"
+                />
 
             <!-- Current Date -->
             <TextView
                 android:id="@+id/currentDateTextView"
-                android:layout_width="106dp"
-                android:layout_height="14sp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:text="12 Августа, 2023"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cityTextView"
                 android:textColor="@color/black"
                 android:gravity="center_vertical"
-                android:lineSpacingExtra="-1sp"
-                android:textSize="12sp" />
+                android:textSize="14sp"
+                android:alpha="0.5"
+                app:lineHeight="16dp"/>
         </RelativeLayout>
     </LinearLayout>
     <!-- User Photo -->

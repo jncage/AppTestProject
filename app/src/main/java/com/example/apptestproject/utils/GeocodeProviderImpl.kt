@@ -8,7 +8,7 @@ import java.io.IOException
 import java.util.Locale
 import javax.inject.Inject
 
-class GeocodeHelper @Inject constructor(private val context: Context) : GeocodeProvider {
+class GeocodeProviderImpl @Inject constructor(private val context: Context) : GeocodeProvider {
     private val tag = this.javaClass.simpleName
     private val geocoder = Geocoder(context, Locale.getDefault())
     private var cityName: String? = null

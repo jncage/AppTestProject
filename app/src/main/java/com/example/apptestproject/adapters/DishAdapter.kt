@@ -15,12 +15,11 @@ import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
 class DishAdapter(
+    private val picasso: Picasso,
     private var dishes: List<Dish> = emptyList(),
     private val onDishClick: (Dish) -> Unit
 ) :
     RecyclerView.Adapter<DishAdapter.DishViewHolder>() {
-    @Inject
-    lateinit var picasso: Picasso
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishViewHolder {
         val inflater = LayoutInflater.from(parent.context)

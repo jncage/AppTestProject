@@ -9,7 +9,7 @@
     <ImageView
         android:padding="4dp"
         android:background="@drawable/cornered_shape_6dp"
-        android:backgroundTint="@color/tag_inactive"
+        android:backgroundTint="@color/color_inactive"
         android:id="@+id/dishImageCart"
         android:layout_width="62dp"
         android:layout_height="62dp"
@@ -24,8 +24,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/sf_pro_display_regular"
-        android:lineHeight="14.7sp"
-        android:text="TextView"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout"
@@ -39,7 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/sf_pro_display_regular"
-        android:text="price ₽"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/dishNameCart"
@@ -51,9 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginTop="8dp"
-        android:alpha="0.5"
+        android:alpha="0.4"
         android:fontFamily="@font/sf_pro_display_regular"
-        android:text=" · weightг"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/priceView"
@@ -89,7 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="1" />
+            android:fontFamily="@font/sf_pro_display_medium"
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/plusButton"

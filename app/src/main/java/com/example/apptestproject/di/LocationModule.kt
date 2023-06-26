@@ -1,7 +1,7 @@
 package com.example.apptestproject.di
 
 import com.example.apptestproject.utils.FusedLocationProvider
-import com.example.apptestproject.utils.GeocodeHelper
+import com.example.apptestproject.utils.GeocodeProviderImpl
 import com.example.apptestproject.utils.GeocodeProvider
 import com.example.apptestproject.utils.LocationProvider
 import dagger.Binds
@@ -14,5 +14,5 @@ abstract class LocationModule {
     abstract fun provideLocationProvider(locationProvider: FusedLocationProvider): LocationProvider
 
     @Binds
-    abstract fun provideGeocodeProvider(geocodeProvider: GeocodeHelper): GeocodeProvider
+    abstract fun provideGeocodeProvider(geocodeProvider: GeocodeProviderImpl): GeocodeProvider
 }

@@ -13,12 +13,12 @@ import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
 class CartAdapter(
+    private val picasso: Picasso,
     private var cartItems: List<CartItem>,
     private val onPlusClick: (CartItem) -> Unit,
     private val onMinusClick: (CartItem) -> Unit
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
-    @Inject
-    lateinit var picasso: Picasso
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)

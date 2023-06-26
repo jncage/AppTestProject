@@ -12,19 +12,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.apptestproject.MyApp
 import com.example.apptestproject.R
-import com.example.apptestproject.api.CategoriesApiService
 import com.example.apptestproject.models.Category
-import com.example.apptestproject.network.ApiClient
 import com.example.apptestproject.utils.DateUtil
 import com.example.apptestproject.utils.LocationHelper
 import com.example.apptestproject.viewmodels.CategoryViewModel
-import com.example.apptestproject.viewmodels.LocationViewModel
-import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
-import okhttp3.OkHttpClient
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var sharedPreferences: SharedPreferences
     private val tag = this.javaClass.simpleName
 
@@ -44,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         (application as MyApp).appComponent.inject(this)
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val currentDate = findViewById<TextView>(R.id.currentDateTextView)
-        cityNameTextView = findViewById<TextView>(R.id.cityTextView)
+        cityNameTextView = findViewById(R.id.cityTextView)
         currentDate.text = DateUtil.getCurrentDate()
         locationHelper.locationLiveData.observe(this) { cityName ->
             Log.d("LocationHelper", "Livedata in mainActivity is $cityName")
