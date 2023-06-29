@@ -9,5 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="color_active">#3364E0</color>
     <color name="color_inactive">#F8F7F5</color>
-    <color name="navbar_inactive">#A5A9B2</color>
+    <color name="item_inactive">#A5A9B2</color>
 </resources>

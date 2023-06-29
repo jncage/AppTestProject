@@ -1,6 +1,7 @@
 package com.example.apptestproject.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.apptestproject.repositories.CartRepository
 import com.example.apptestproject.repositories.CartRepositoryImpl
 import com.squareup.picasso.OkHttp3Downloader
@@ -18,6 +19,12 @@ class AppModule {
         return Picasso.Builder(context)
             .downloader(OkHttp3Downloader(okHttpClient))
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(context: Context): SharedPreferences {
+        return context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
     }
 
     @Provides

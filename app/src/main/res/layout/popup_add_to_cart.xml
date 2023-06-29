@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
 
     <ImageView
-        android:background="@drawable/cornered_shape_10dp"
-        android:backgroundTint="@color/color_inactive"
         android:id="@+id/dishImagePopUp"
         android:layout_width="0dp"
         android:layout_height="232dp"
-        android:layout_marginTop="8dp"
         android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/cornered_shape_10dp"
+        android:backgroundTint="@color/color_inactive"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="centerInside"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/closeButton"
@@ -26,8 +24,8 @@
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:padding="8dp"
         android:background="@drawable/cornered_shape_8dp"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="@id/dishImagePopUp"
         app:layout_constraintTop_toTopOf="@id/dishImagePopUp"
         app:srcCompat="@drawable/ic_close_button"
@@ -39,22 +37,21 @@
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:padding="8dp"
         android:background="@drawable/cornered_shape_8dp"
+        android:padding="8dp"
         app:layout_constraintEnd_toStartOf="@+id/closeButton"
         app:layout_constraintTop_toTopOf="@id/dishImagePopUp"
         app:srcCompat="@drawable/ic_fav_button"
         app:tint="@color/black" />
 
     <TextView
-        android:textSize="16sp"
-        android:lineHeight="16.8sp"
-        android:textColor="@color/black"
         android:id="@+id/dishNameView"
-        android:fontFamily="@font/sf_pro_display_medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/sf_pro_display_medium"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dishImagePopUp" />
@@ -63,8 +60,8 @@
         android:id="@+id/priceView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_pro_display_regular"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/sf_pro_display_regular"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/dishNameView"
@@ -72,33 +69,30 @@
 
     <TextView
         android:id="@+id/weightView"
-        android:fontFamily="@font/sf_pro_display_regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginTop="8dp"
         android:alpha="0.4"
+        android:fontFamily="@font/sf_pro_display_regular"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/priceView"
         app:layout_constraintTop_toBottomOf="@+id/dishNameView" />
 
     <TextView
-        android:textSize="14sp"
-        android:fontFamily="@font/sf_pro_display_regular"
-        android:textColor="@color/black"
         android:id="@+id/descriptionView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:alpha="0.65"
+        android:fontFamily="@font/sf_pro_display_regular"
+        android:textColor="@color/black"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/priceView"
         app:layout_constraintTop_toBottomOf="@+id/priceView" />
 
     <TextView
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:gravity="center"
         android:id="@+id/addToCartButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -108,8 +102,11 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/cornered_shape_10dp"
         android:backgroundTint="@color/color_active"
+        android:gravity="center"
         android:padding="15dp"
         android:text="@string/add_to_cart"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

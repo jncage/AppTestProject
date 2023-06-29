@@ -1,4 +1,4 @@
-package com.example.apptestproject.utils
+package com.example.apptestproject.adapters.location
 
 import com.example.apptestproject.models.LocationData
 

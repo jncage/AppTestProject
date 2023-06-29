@@ -1,7 +1,6 @@
-package com.example.apptestproject.utils
+package com.example.apptestproject.adapters.location
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
@@ -61,7 +60,6 @@ class LocationHelper @Inject constructor(
             try {
                 val locationData = locationProvider.getCurrentLocation()
                 val cityName = geocodeProvider.getCityName(locationData)
-                Log.d("LocationHelper", "City name from locationHelper is $cityName")
                 _locationLiveData.postValue(cityName)
             } catch (exception: Exception) {
                 Log.d(tag, "Failed to receive current location")

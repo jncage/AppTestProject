@@ -19,7 +19,6 @@ class AddToCartDialog(
     fun show() {
         val popupView = LayoutInflater.from(context).inflate(R.layout.popup_add_to_cart, null)
         val builder = AlertDialog.Builder(context)
-
         val dishName = popupView.findViewById<TextView>(R.id.dishNameView)
         val dishImage = popupView.findViewById<ImageView>(R.id.dishImagePopUp)
         val dishPrice = popupView.findViewById<TextView>(R.id.priceView)
@@ -35,13 +34,11 @@ class AddToCartDialog(
         val alertDialog = builder.create()
         alertDialog.window?.setBackgroundDrawableResource(R.drawable.cornered_shape_15dp)
         alertDialog.show()
-
         val addToCartButton = popupView.findViewById<TextView>(R.id.addToCartButton)
         addToCartButton.setOnClickListener {
             addToCartListener.invoke()
             alertDialog.dismiss()
         }
-
         val dismissButton = popupView.findViewById<ImageView>(R.id.closeButton)
         dismissButton.setOnClickListener {
             alertDialog.dismiss()

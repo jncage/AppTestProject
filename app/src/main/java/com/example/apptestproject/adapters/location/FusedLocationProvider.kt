@@ -1,8 +1,7 @@
-package com.example.apptestproject.utils
+package com.example.apptestproject.adapters.location
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import com.example.apptestproject.models.LocationData
 import com.google.android.gms.location.*
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -23,7 +22,6 @@ class FusedLocationProvider @Inject constructor(private val context: Context) : 
             val locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
                     locationResult.lastLocation?.let { location ->
-                        Log.d("LocationHelper", "Location is $location")
                         continuation.resume(LocationData(location.latitude, location.longitude))
                     } ?: run {
                         continuation.resumeWithException(Exception("Failed to retrieve location"))

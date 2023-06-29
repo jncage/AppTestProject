@@ -9,48 +9,44 @@
         android:layout_width="173dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
         android:background="#00000000">
         <!-- Location Icon -->
         <ImageView
             android:id="@+id/locationIconImageView"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:paddingTop="2dp"
             android:background="#00000000"
+            android:paddingTop="2dp"
             android:src="@drawable/location_icon" />
 
         <RelativeLayout
             android:id="@+id/group_604"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:background="#00000000">
             <!-- City Name -->
             <TextView
                 android:id="@+id/cityTextView"
-                android:fontFamily="@font/sf_pro_display_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:fontFamily="@font/sf_pro_display_medium"
                 android:textColor="@color/black"
-                app:lineHeight="22dp"
-                android:text="Москва"
-                />
-
+                android:textSize="18sp"
+                app:lineHeight="22dp" />
             <!-- Current Date -->
             <TextView
                 android:id="@+id/currentDateTextView"
                 android:layout_width="wrap_content"
-                android:text="12 Августа, 2023"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cityTextView"
-                android:textColor="@color/black"
-                android:gravity="center_vertical"
-                android:textSize="14sp"
                 android:alpha="0.5"
-                app:lineHeight="16dp"/>
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:lineHeight="16dp" />
         </RelativeLayout>
     </LinearLayout>
     <!-- User Photo -->

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="16dp">
 
     <ImageView
-        android:padding="4dp"
-        android:background="@drawable/cornered_shape_6dp"
-        android:backgroundTint="@color/color_inactive"
         android:id="@+id/dishImageCart"
         android:layout_width="62dp"
         android:layout_height="62dp"
+        android:background="@drawable/cornered_shape_6dp"
+        android:backgroundTint="@color/color_inactive"
+        android:padding="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dishNameCart"
@@ -56,12 +54,12 @@
         app:layout_constraintTop_toBottomOf="@+id/dishNameCart" />
 
     <LinearLayout
-        android:backgroundTint="#EFEEEC"
-        android:background="@drawable/cornered_shape_10dp"
         android:id="@+id/linearLayout"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="200dp"
+        android:background="@drawable/cornered_shape_10dp"
+        android:backgroundTint="#EFEEEC"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="4dp"
@@ -84,8 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:fontFamily="@font/sf_pro_display_medium"
+            android:gravity="center"
             android:textSize="14sp" />
 
         <ImageView

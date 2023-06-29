@@ -1,9 +1,9 @@
 package com.example.apptestproject.di
 
 import android.content.Context
-import com.example.apptestproject.ui.CartActivity
-import com.example.apptestproject.ui.DishListActivity
-import com.example.apptestproject.ui.MainActivity
+import com.example.apptestproject.ui.CartFragment
+import com.example.apptestproject.ui.DishListFragment
+import com.example.apptestproject.ui.HomeFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -12,9 +12,9 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [LocationModule::class, ApiModule::class, AppModule::class])
 interface AppComponent {
-    fun inject(activity: MainActivity)
-    fun inject(activity: DishListActivity)
-    fun inject(activity: CartActivity)
+    fun inject(activity: HomeFragment)
+    fun inject(activity: DishListFragment)
+    fun inject(activity: CartFragment)
 
     @Component.Factory
     interface Factory {
