@@ -1,9 +1,9 @@
 package com.example.apptestproject.di
 
-import com.example.apptestproject.adapters.location.FusedLocationProvider
-import com.example.apptestproject.adapters.location.GeocodeProvider
-import com.example.apptestproject.adapters.location.GeocodeProviderImpl
-import com.example.apptestproject.adapters.location.LocationProvider
+import com.example.apptestproject.location.FusedLocationProvider
+import com.example.apptestproject.location.GeocodeProvider
+import com.example.apptestproject.location.GeocodeProviderImpl
+import com.example.apptestproject.location.LocationProvider
 import dagger.Binds
 import dagger.Module
 

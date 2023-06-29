@@ -2,6 +2,7 @@ package com.example.apptestproject.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.fragment.app.FragmentActivity
 import com.example.apptestproject.repositories.CartRepository
 import com.example.apptestproject.repositories.CartRepositoryImpl
 import com.squareup.picasso.OkHttp3Downloader
@@ -13,6 +14,12 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
+
+    @Provides
+    fun provideFragmentActivity(context: Context): FragmentActivity {
+        return context as FragmentActivity
+    }
+
     @Singleton
     @Provides
     fun providePicasso(context: Context, okHttpClient: OkHttpClient): Picasso {

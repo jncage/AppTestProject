@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.apptestproject.MyApp
 import com.example.apptestproject.R
-import com.example.apptestproject.adapters.location.LocationHelper
+import com.example.apptestproject.location.LocationHelper
 import com.example.apptestproject.models.Category
 import com.example.apptestproject.utils.DateUtil
 import com.example.apptestproject.viewmodels.CategoryViewModel

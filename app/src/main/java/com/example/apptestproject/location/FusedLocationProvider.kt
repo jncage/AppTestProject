@@ -1,4 +1,4 @@
-package com.example.apptestproject.adapters.location
+package com.example.apptestproject.location
 
 import android.annotation.SuppressLint
 import android.content.Context

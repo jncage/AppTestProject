@@ -26,6 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.HomeFragment" />
+        <activity android:name=".ui.DishListFragment" />
+        <activity android:name=".ui.CartFragment" />
     </application>
 
 </manifest>

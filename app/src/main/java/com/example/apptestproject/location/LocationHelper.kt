@@ -1,7 +1,6 @@
-package com.example.apptestproject.adapters.location
+package com.example.apptestproject.location
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,7 +16,7 @@ import javax.inject.Singleton
 
 @Singleton
 class LocationHelper @Inject constructor(
-    private val activity: Context,
+    private val activity: FragmentActivity,
     private val locationProvider: LocationProvider,
     private val geocodeProvider: GeocodeProvider
 ) {
@@ -37,7 +36,7 @@ class LocationHelper @Inject constructor(
 
     private fun requestLocationPermission() {
         val requestPermissionLauncher =
-            (activity as FragmentActivity).registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
                 if (isGranted) {
                     startLocationUpdates()
                 } else {
