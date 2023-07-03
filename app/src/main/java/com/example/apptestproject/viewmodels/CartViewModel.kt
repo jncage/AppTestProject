@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.example.apptestproject.models.CartData
 import com.example.apptestproject.models.CartItem
 import com.example.apptestproject.repositories.CartRepository
-import com.example.apptestproject.repositories.CartRepositoryImpl
 import javax.inject.Inject
 
-class CartViewModel @Inject constructor(private val repository: CartRepository): ViewModel() {
+class CartViewModel @Inject constructor(
+    private val repository: CartRepository
+) : ViewModel() {
     private val _cartData = MutableLiveData<CartData>()
     val cartData: LiveData<CartData> get() = _cartData
 

@@ -10,11 +10,13 @@ import com.example.apptestproject.models.Category
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class CategoryViewModel @Inject constructor(private val categoriesApiService: CategoriesApiService) :
-    ViewModel() {
+class CategoryViewModel @Inject constructor(
+    private val categoriesApiService: CategoriesApiService
+) : ViewModel() {
     private val _categoriesLiveData = MutableLiveData<List<Category>>()
     val categoriesLiveData: LiveData<List<Category>>
         get() = _categoriesLiveData
+
 
     fun fetchCategories() {
         viewModelScope.launch {
@@ -26,4 +28,5 @@ class CategoryViewModel @Inject constructor(private val categoriesApiService: Ca
             }
         }
     }
+
 }

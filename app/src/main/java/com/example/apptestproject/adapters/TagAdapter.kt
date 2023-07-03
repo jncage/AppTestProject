@@ -1,6 +1,5 @@
 package com.example.apptestproject.adapters
 
-import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,42 +30,29 @@ class TagAdapter(
         fun bind(tag: String) {
             val context = itemView.context
             val isSelected = adapterPosition == selectedItemPosition
-//            val textColor =
-//                ContextCompat.getColor(context, if (isSelected) R.color.white else R.color.black)
-//            val bgTintList = ContextCompat.getColorStateList(
-//                context,
-//                if (isSelected) R.color.color_active else R.color.color_inactive
-//            )
-
-            val shapeDrawable = ContextCompat.getDrawable(
-                context, R.drawable.cornered_shape_10dp
-            ) as GradientDrawable
-            val color = if (isSelected) ContextCompat.getColor(context, R.color.color_active)
-            else ContextCompat.getColor(context, R.color.color_inactive)
-            shapeDrawable.setColor(color)
-
-//            with(tagTextView) {
-//                text = tag
-//                setTextColor(textColor)
-//                backgroundTintList = bgTintList
-//            }
+            val textColor =
+                ContextCompat.getColor(context, if (isSelected) R.color.white else R.color.black)
+            val bgTintList = ContextCompat.getColorStateList(
+                context,
+                if (isSelected) R.color.color_active else R.color.color_inactive
+            )
+            with(tagTextView) {
+                text = tag
+                setTextColor(textColor)
+                backgroundTintList = bgTintList
+            }
 
             itemView.setOnClickListener {
-                setSelectedItemPosition(adapterPosition)
+                if (selectedItemPosition != adapterPosition) {
+                    val previousItemPosition = selectedItemPosition
+                    selectedItemPosition = adapterPosition
+                    notifyItemChanged(previousItemPosition)
+                    notifyItemChanged(selectedItemPosition)
+                }
                 onTagClick(tag)
             }
         }
 
-    }
-
-
-    fun setSelectedItemPosition(position: Int) {
-        if (selectedItemPosition != position) {
-            val previousItemPosition = selectedItemPosition
-            selectedItemPosition = position
-            notifyItemChanged(previousItemPosition)
-            notifyItemChanged(selectedItemPosition)
-        }
     }
 
     fun updateTags(newTags: List<String>) {

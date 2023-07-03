@@ -1,7 +1,6 @@
 package com.example.apptestproject.ui
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,19 +20,17 @@ import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
-    private val tag = this.javaClass.simpleName
 
     @Inject
     lateinit var picasso: Picasso
 
-    @Inject
-    lateinit var locationHelper: LocationHelper
     private lateinit var cityNameTextView: TextView
 
     @Inject
     lateinit var categoryViewModel: CategoryViewModel
+
+    @Inject
+    lateinit var locationHelper: LocationHelper
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,22 +51,18 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        locationHelper.locationLiveData.observe(viewLifecycleOwner) { cityName ->
-            cityNameTextView.text = cityName
-            sharedPreferences.edit().putString("cityName", cityName).apply()
-        }
         categoryViewModel.categoriesLiveData.observe(viewLifecycleOwner) { categories ->
             updateCategories(categories)
         }
         categoryViewModel.fetchCategories()
-
-        locationHelper.checkLocationPermission()
-
+        locationHelper.fetchCityName()
     }
 
     override fun onResume() {
         super.onResume()
-        cityNameTextView.text = sharedPreferences.getString("cityName", "")
+        locationHelper.getCityName().observe(viewLifecycleOwner) {
+            cityNameTextView.text = it
+        }
     }
 
     private fun updateCategories(categories: List<Category>) {

@@ -1,7 +1,6 @@
 package com.example.apptestproject.ui
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apptestproject.MyApp
 import com.example.apptestproject.R
 import com.example.apptestproject.adapters.CartAdapter
+import com.example.apptestproject.location.LocationHelper
 import com.example.apptestproject.utils.DateUtil
 import com.example.apptestproject.viewmodels.CartViewModel
 import com.squareup.picasso.Picasso
@@ -24,10 +24,9 @@ class CartFragment : Fragment() {
     @Inject
     lateinit var picasso: Picasso
 
-    private lateinit var cityNameTextView: TextView
-
     @Inject
-    lateinit var sharedPreferences: SharedPreferences
+    lateinit var locationHelper: LocationHelper
+    private lateinit var cityNameTextView: TextView
     private lateinit var cartAdapter: CartAdapter
     private lateinit var totalPrice: TextView
     override fun onAttach(context: Context) {
@@ -41,10 +40,8 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
-        cityNameTextView = view.findViewById(R.id.cityNameCart)
-        val cityName = sharedPreferences.getString("cityName", "")
-        cityNameTextView.text = cityName
-        val currentDateTextView = view.findViewById<TextView>(R.id.currentDateCart)
+        cityNameTextView = view.findViewById(R.id.cityTextView)
+        val currentDateTextView = view.findViewById<TextView>(R.id.currentDateTextView)
         currentDateTextView.text = DateUtil.getCurrentDate()
         val cartRecyclerView = view.findViewById<RecyclerView>(R.id.cartRecyclerView)
         totalPrice = view.findViewById(R.id.pay)
@@ -62,12 +59,14 @@ class CartFragment : Fragment() {
             totalPrice.text = getString(R.string.pay, getString(R.string.price, it.totalPrice))
         }
         cartViewModel.updateCartData()
+        locationHelper.fetchCityName()
 
     }
 
     override fun onResume() {
         super.onResume()
-        cityNameTextView.text = sharedPreferences.getString("cityName", "")
-
+        locationHelper.getCityName().observe(viewLifecycleOwner) {
+            cityNameTextView.text = it
+        }
     }
 }

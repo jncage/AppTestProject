@@ -6,13 +6,17 @@ import com.example.apptestproject.location.GeocodeProviderImpl
 import com.example.apptestproject.location.LocationProvider
 import dagger.Binds
 import dagger.Module
+import javax.inject.Singleton
 
 @Module
 abstract class LocationModule {
 
     @Binds
-    abstract fun provideLocationProvider(locationProvider: FusedLocationProvider): LocationProvider
+    @Singleton
+    abstract fun bindLocationProvider(provider: FusedLocationProvider): LocationProvider
 
     @Binds
-    abstract fun provideGeocodeProvider(geocodeProvider: GeocodeProviderImpl): GeocodeProvider
+    @Singleton
+    abstract fun bindGeocodeProvider(provider: GeocodeProviderImpl): GeocodeProvider
+
 }

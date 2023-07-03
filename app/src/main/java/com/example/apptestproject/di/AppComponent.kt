@@ -12,9 +12,9 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [LocationModule::class, ApiModule::class, AppModule::class])
 interface AppComponent {
-    fun inject(activity: HomeFragment)
-    fun inject(activity: DishListFragment)
-    fun inject(activity: CartFragment)
+    fun inject(fragment: HomeFragment)
+    fun inject(fragment: DishListFragment)
+    fun inject(fragment: CartFragment)
 
     @Component.Factory
     interface Factory {

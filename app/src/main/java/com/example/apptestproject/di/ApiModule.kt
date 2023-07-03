@@ -16,9 +16,11 @@ import javax.inject.Singleton
 @Module
 class ApiModule {
     @Provides
+    @Singleton
     fun provideApiClient(impl: ApiClientImpl): ApiClient = impl
 
     @Provides
+    @Singleton
     fun provideOkHttpClient(
         cache: Cache,
         loggingInterceptor: HttpLoggingInterceptor
@@ -30,13 +32,15 @@ class ApiModule {
     }
 
     @Provides
+    @Singleton
     fun provideCache(context: Context): Cache {
         val cacheDirectory = File(context.cacheDir, "http-cache")
-        val cacheSize = (10 * 1024 * 1024).toLong() // 10MB
+        val cacheSize = (10 * 1024 * 1024).toLong()
         return Cache(cacheDirectory, cacheSize)
     }
 
     @Provides
+    @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -44,10 +48,12 @@ class ApiModule {
     }
 
     @Provides
+    @Singleton
     fun provideDishesApiService(apiClient: ApiClient): DishesApiService =
         apiClient.createDishesApiService()
 
     @Provides
+    @Singleton
     fun provideCategoriesApiService(apiClient: ApiClient): CategoriesApiService =
         apiClient.createCategoriesApiService()
 }
