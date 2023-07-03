@@ -1,11 +1,14 @@
 package com.example.apptestproject.ui
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apptestproject.MyApp
@@ -59,8 +62,17 @@ class CartFragment : Fragment() {
             totalPrice.text = getString(R.string.pay, getString(R.string.price, it.totalPrice))
         }
         cartViewModel.updateCartData()
-        locationHelper.fetchCityName()
+        if (hasLocationPermission()) {
+            locationHelper.fetchCityName()
+        }
 
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onResume() {

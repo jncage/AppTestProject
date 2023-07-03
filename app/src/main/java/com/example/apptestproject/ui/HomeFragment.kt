@@ -1,6 +1,8 @@
 package com.example.apptestproject.ui
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.apptestproject.MyApp
@@ -31,6 +35,14 @@ class HomeFragment : Fragment() {
 
     @Inject
     lateinit var locationHelper: LocationHelper
+    private val requestLocationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                locationHelper.fetchCityName()
+            }
+        }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,7 +67,27 @@ class HomeFragment : Fragment() {
             updateCategories(categories)
         }
         categoryViewModel.fetchCategories()
-        locationHelper.fetchCityName()
+
+        if (hasLocationPermission()) {
+            locationHelper.fetchCityName()
+        } else {
+            requestLocationPermission()
+        }
+
+
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestLocationPermission() {
+        requestLocationPermissionLauncher.launch(
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
     }
 
     override fun onResume() {
@@ -63,6 +95,11 @@ class HomeFragment : Fragment() {
         locationHelper.getCityName().observe(viewLifecycleOwner) {
             cityNameTextView.text = it
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        requestLocationPermissionLauncher.unregister()
     }
 
     private fun updateCategories(categories: List<Category>) {
